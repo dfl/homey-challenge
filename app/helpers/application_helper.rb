@@ -3,10 +3,10 @@ module ApplicationHelper
     "https://github.com/#{github_username}.png?size=#{size}"
   end
 
-  FLASH_TYPE_HASH = { success: "green", error: "yellow", alert: "red", notice: "indigo" }.freeze
+  FLASH_TYPES = { success: "green", error: "yellow", alert: "red", notice: "indigo" }.freeze
 
   def alert_color(flash_type)
-    (FLASH_TYPE_HASH[flash_type.to_sym] || flash_type.to_s)
+    (FLASH_TYPES[flash_type.to_sym] || flash_type.to_s)
   end
 
   def flash_messages(_opts = [])

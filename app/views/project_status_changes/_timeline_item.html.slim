@@ -1,5 +1,0 @@
-= render "shared/timeline_item", user: project_status_change.user, created_at: project_status_change.created_at do
-  | Changed status from 
-  span.font-medium= project_status_change.from_status.humanize
-  |  to 
-  span.font-medium= project_status_change.to_status.humanize
