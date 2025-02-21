@@ -21,6 +21,7 @@ class User < ApplicationRecord
 
   normalizes :email, with: -> { _1.strip.downcase }
 
+
   # Callbacks
   before_validation if: :email_changed?, on: :update do
     self.verified = false

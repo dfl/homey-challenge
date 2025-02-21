@@ -1,4 +1,7 @@
 module ApplicationHelper
+  def github_avatar_url(github_username, size: 200)
+    "https://github.com/#{github_username}.png?size=#{size}"
+  end
 
 
   FLASH_TYPE_HASH = { success: 'green', error: 'yellow', alert: 'red', notice: 'indigo' }.freeze
