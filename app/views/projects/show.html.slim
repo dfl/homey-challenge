@@ -17,14 +17,21 @@
         .p-6
           .flex.items-start.space-x-4
             .flex-shrink-0
-              = image_tag comment.user.gravatar_url(size: 40), class: "h-10 w-10 rounded-full", alt: comment.user.full_name
+              - if comment.user.github_username.present?
+                = image_tag github_avatar_url(comment.user.github_username, size: 40), class: "h-10 w-10 rounded-full", alt: comment.user.full_name
+              - else
+                .h-10.w-10.rounded-full.bg-gray-200.flex.items-center.justify-center
+                  span.text-gray-500.text-sm= comment.user.full_name[0].upcase
             .flex-1
               .flex.items-center.justify-between
                 .flex.items-center.space-x-2
                   .text-sm.font-medium.text-gray-900= comment.user.full_name
                   .text-xs.text-gray-500 • #{time_ago_in_words(comment.created_at)} ago
                 - if comment.user == Current.user
-                  = button_to project_comment_path(@project, comment), method: :delete, class: "text-gray-400 hover:text-red-500",  { turbo_confirm: "Are you sure?" } do
+                  = button_to project_comment_path(@project, comment), 
+                    method: :delete, 
+                    class: "text-gray-400 hover:text-red-500", 
+                    data: { turbo_confirm: "Are you sure?" } do
                     svg.h-4.w-4 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                       path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
               .mt-2.text-sm.text-gray-700= comment.text
