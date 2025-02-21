@@ -1,4 +1,4 @@
-.p-6.border-b.border-gray-200
+.p-6.border-b.border-gray-200.bg-gray-50
   .flex.items-start.space-x-4
     .flex-shrink-0
       - if timeline_item.user.github_username.present?
@@ -7,11 +7,10 @@
         .h-10.w-10.rounded-full.bg-gray-200.flex.items-center.justify-center
           span.text-gray-500.text-sm= timeline_item.user.initials
     .flex-1
-      .flex.items-center.justify-between
-        .flex.items-center.space-x-2
-          .text-sm.font-medium.text-gray-900= timeline_item.user.full_name
-          .text-xs.text-gray-500 • #{time_ago_in_words(timeline_item.created_at)} ago
-        - if timeline_item.user == Current.user
+      .flex.items-center.space-x-2
+        .text-sm.font-medium.text-gray-900= timeline_item.user.full_name
+        .text-xs.text-gray-500 • #{time_ago_in_words(timeline_item.created_at)} ago
+      - if timeline_item.user == Current.user
           = button_to project_comment_path(@project, timeline_item), 
             class: "text-gray-400 hover:text-red-500", 
             data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do

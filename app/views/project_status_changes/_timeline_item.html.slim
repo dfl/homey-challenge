@@ -1,17 +1,5 @@
-.p-6.border-b.border-gray-200.bg-gray-50
-  .flex.items-start.space-x-4
-    .flex-shrink-0
-      - if timeline_item.user.github_username.present?
-        = image_tag github_avatar_url(timeline_item.user.github_username, size: 40), class: "h-10 w-10 rounded-full", alt: timeline_item.user.full_name
-      - else
-        .h-10.w-10.rounded-full.bg-gray-200.flex.items-center.justify-center
-          span.text-gray-500.text-sm= timeline_item.user.initials
-    .flex-1
-      .flex.items-center.space-x-2
-        .text-sm.font-medium.text-gray-900= timeline_item.user.full_name
-        .text-xs.text-gray-500 • #{time_ago_in_words(timeline_item.created_at)} ago
-      .mt-2.text-sm.text-gray-700
-        | Changed status from 
-        span.font-medium= timeline_item.from_status.titleize
-        |  to 
-        span.font-medium= timeline_item.to_status.titleize
+= render "shared/timeline_item", user: project_status_change.user, created_at: project_status_change.created_at do
+  | Changed status from 
+  span.font-medium= project_status_change.from_status.humanize
+  |  to 
+  span.font-medium= project_status_change.to_status.humanize
