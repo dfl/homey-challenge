@@ -22,9 +22,9 @@ end
 
 project = Project.find_or_create_by!(name: "Project 1")
 
-project.comments.find_or_create_by!(user: User.find_by_full_name("User One"),
+project.comments.find_or_create_by!(user: User.find_by_full_name("User 1"),
   text: "This is a comment")
-project.comments.find_or_create_by!(user: User.find_by_full_name("User Two"),
+project.comments.find_or_create_by!(user: User.find_by_full_name("User 2"),
   text: "This is another comment")
 project.comments.find_or_create_by!(user: User.find_by_full_name("David Lowenfels"),
   text: "Thanks team!")
