@@ -18,5 +18,5 @@ div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg"
 <% end -%>
           td.px-3.py-3.text-sm.whitespace-nowrap = link_to 'Show', <%= model_resource_name %>, class: 'inline-flex text-xs leading-5 font-semibold text-indigo-500 hover:underline cursor-pointer'
           td.px-3.py-3.text-sm.whitespace-nowrap = link_to 'Edit', edit_<%= singular_route_name %>_path(<%= singular_table_name %>), class: 'inline-flex text-xs leading-5 font-semibold text-yellow-500 hover:underline cursor-pointer'
-          td.px-3.py-3.text-sm.whitespace-nowrap = link_to 'Destroy', <%= model_resource_name %>, method: :delete, data: { confirm: 'Are you sure?' }, class: 'inline-flex text-xs leading-5 font-semibold text-red-500 hover:underline cursor-pointer'
+          td.px-3.py-3.text-sm.whitespace-nowrap = link_to 'Destroy', <%= model_resource_name %>, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: 'inline-flex text-xs leading-5 font-semibold text-red-500 hover:underline cursor-pointer'
 
