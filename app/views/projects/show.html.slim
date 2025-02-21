@@ -9,7 +9,7 @@
     .px-6.py-4.border-b.border-gray-200
       .flex.items-center.space-x-2
         span.text-sm.font-medium.text-gray-500 Status:
-        span.inline-flex.items-center.px-2.py-1.rounded-full.text-xs.font-medium class="#{@project.status == 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}"
+        span.inline-flex.items-center.px-2.py-1.rounded-full.text-xs.font-medium class=status_color_classes[@project.status]
           = @project.status.titleize
 
     .divide-y.divide-gray-200#timeline
