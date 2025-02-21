@@ -32,6 +32,12 @@ RSpec.describe ProjectsController, type: :request do
       get project_url(project)
       expect(response).to have_http_status(:success)
     end
+
+    it "displays project details" do
+      get project_url(project)
+      expect(response.body).to include(project.name)
+      expect(response.body).to include(project.status.titleize)
+    end
   end
 
   describe "GET /edit" do

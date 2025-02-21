@@ -3,7 +3,7 @@ class Project < ApplicationRecord
 
   # Associations
   has_many :comments, dependent: :destroy
-  has_many :status_changes, class_name: 'ProjectStatusChange', dependent: :destroy
+  has_many :status_changes, class_name: "ProjectStatusChange", dependent: :destroy
   has_many :users, through: :comments
 
   # Validations
@@ -14,6 +14,11 @@ class Project < ApplicationRecord
   before_validation :set_default_status, on: :create
   before_save :track_status_change, if: :status_changed?
 
+  # Decorators
+  def timeline_items
+    (comments + status_changes).sort_by(&:created_at)
+  end
+
   private
 
   def set_default_status
@@ -22,10 +27,10 @@ class Project < ApplicationRecord
 
   def track_status_change
     return unless Current.user # Skip if no user context (like in tests/console)
-    
+
     status_changes.build(
       user: Current.user,
-      from_status: status_was || 'pending',
+      from_status: status_was.presence || "pending",
       to_status: status
     )
   end

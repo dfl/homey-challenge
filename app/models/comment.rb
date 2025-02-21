@@ -1,6 +1,6 @@
 class Comment < ApplicationRecord
   include TimelineItem
-  
+
   belongs_to :project
   belongs_to :user
 

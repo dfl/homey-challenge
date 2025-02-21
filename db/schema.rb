@@ -20,8 +20,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_21_150732) do
   end
 
   create_table "project_status_changes", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "project_id", null: false
+    t.string "from_status", null: false
+    t.string "to_status", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_project_status_changes_on_project_id"
+    t.index ["user_id"], name: "index_project_status_changes_on_user_id"
   end
 
   create_table "projects", force: :cascade do |t|
@@ -51,5 +57,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_21_150732) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "project_status_changes", "projects"
+  add_foreign_key "project_status_changes", "users"
   add_foreign_key "sessions", "users"
 end
