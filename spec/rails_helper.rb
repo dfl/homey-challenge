@@ -77,7 +77,10 @@ RSpec.configure do |config|
     end
   end
 
-  RSpec.configure do |config|
-    config.include FactoryBot::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
+
+  def sign_in_as(user)
+    post(sign_in_url, params: { email: user.email, password: "SecurePassword123!" })
+    user
   end
 end
