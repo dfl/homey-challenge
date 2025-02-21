@@ -3,7 +3,7 @@ FactoryBot.define do
     email { Faker::Internet.email }
     password { 'SecurePassword123!' }
     verified { false }
-
+    full_name { Faker::Name.name }
     trait :verified do
       verified { true }
     end
