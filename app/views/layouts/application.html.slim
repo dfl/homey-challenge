@@ -15,5 +15,6 @@ html
     = stylesheet_link_tag :app, "data-turbo-track": "reload"
     = javascript_importmap_tags
 
-  body
+  body id="controller-#{controller_name}" class="action-#{action_name}"
     = yield
+    = render "shared/footer" unless controller_name == "home"

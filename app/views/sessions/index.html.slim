@@ -1,22 +1,15 @@
-p[style="color: green"]
-  = notice
-h1
-  | Devices &amp; Sessions
+h1 Devices & Sessions
 #sessions
   - @sessions.each do |session|
-    #<ruby code=[dom_id="" session=""]
-      | "&gt; 
+    div id=dom_id(session)
       p
-        strong
-          | User Agent:
+        strong User Agent:
         = session.user_agent
       p
-        strong
-          | Ip Address:
+        strong IP Address:
         = session.ip_address
       p
-        strong
-          | Created at:
+        strong Created at:
         = session.created_at
     p
       = button_to "Log out", session, method: :delete

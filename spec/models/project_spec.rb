@@ -24,4 +24,48 @@ RSpec.describe Project, type: :model do
       end
     end
   end
+
+  describe '#timeline_items' do
+    let(:project) { create(:project) }
+    let(:comment) { create(:comment, project: project) }
+    let(:status_change) { create(:project_status_change, project: project) }
+
+    it 'returns comments and status changes in chronological order' do
+      comment.update!(created_at: 2.days.ago)
+      status_change.update!(created_at: 1.day.ago)
+      
+      timeline = project.timeline_items
+      expect(timeline).to eq([comment, status_change])
+    end
+  end
+
+  describe 'status tracking' do
+    let(:project) { create(:project) }
+    let(:user) { create(:user) }
+
+    before do
+      allow(Current).to receive(:user).and_return(user)
+    end
+
+    it 'tracks status changes' do
+      project.status = :active
+      
+      expect {
+        project.save!
+      }.to change(ProjectStatusChange, :count).by(1)
+
+      change = ProjectStatusChange.last
+      expect(change.from_status).to eq('pending')
+      expect(change.to_status).to eq('active')
+      expect(change.user).to eq(user)
+    end
+
+    it 'does not track if status remains the same' do
+      project.status = project.status
+
+      expect {
+        project.update!(name: 'New Name')
+      }.not_to change(ProjectStatusChange, :count)
+    end
+  end
 end

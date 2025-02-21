@@ -72,4 +72,16 @@ RSpec.describe User, type: :model do
       expect(token).to be_present
     end
   end
+
+  describe '#initials' do
+    it 'returns initials for full name' do
+      user = build(:user, full_name: 'John Doe')
+      expect(user.initials).to eq('JD')
+    end
+
+    it 'handles multiple word names' do
+      user = build(:user, full_name: 'John Middle Doe')
+      expect(user.initials).to eq('JMD')
+    end
+  end
 end

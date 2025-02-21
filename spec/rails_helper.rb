@@ -83,4 +83,8 @@ RSpec.configure do |config|
     post(sign_in_url, params: { email: user.email, password: "SecurePassword123!" })
     user
   end
+
+  def logout!
+    delete(sessions_url)
+  end
 end
