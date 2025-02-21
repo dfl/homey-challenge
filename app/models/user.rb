@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  # Authentication Zero
   has_secure_password
 
   generates_token_for :email_verification, expires_in: 2.days do
@@ -9,14 +10,18 @@ class User < ApplicationRecord
     password_salt.last(10)
   end
 
-
+  # Associations
   has_many :sessions, dependent: :destroy
+  has_many :comments
+  has_many :projects, through: :comments
 
+  # Validations
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :password, allow_nil: true, length: { minimum: 12 }
 
   normalizes :email, with: -> { _1.strip.downcase }
 
+  # Callbacks
   before_validation if: :email_changed?, on: :update do
     self.verified = false
   end
