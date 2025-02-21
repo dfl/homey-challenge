@@ -1,18 +1,26 @@
-h1.text-xl.text-gray-600.mr-10
-  | Projects
+.max-w-4xl.mx-auto.px-4.py-8
+  .flex.items-center.justify-between.mb-6
+    h1.text-3xl.font-bold.text-gray-900= @project.name
+    .flex.items-center.space-x-4
+      = link_to 'Edit', edit_project_path(@project), class: 'text-indigo-600 hover:text-indigo-900'
+      = link_to 'Back', projects_path, class: 'text-gray-600 hover:text-gray-900'
+  
+  .bg-white.shadow.rounded-lg.overflow-hidden
+    .px-6.py-4.border-b.border-gray-200
+      .flex.items-center.space-x-2
+        span.text-sm.font-medium.text-gray-500 Status:
+        span.inline-flex.items-center.px-2.py-1.rounded-full.text-xs.font-medium class="#{@project.status == 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}"
+          = @project.status.titleize
 
-div class="border border-gray-200 my-7 shadow overflow-hidden rounded-sm"
-  h1= @project.name
+    .divide-y.divide-gray-200
+      - @project.comments.each do |comment|
+        .p-6
+          .flex.items-start.space-x-3
+            .flex-1
+              .flex.items-center.justify-between
+                .text-sm.font-medium.text-gray-900= comment.user.full_name
+                .text-sm.text-gray-500= time_ago_in_words(comment.created_at) + " ago"
+              .mt-2.text-sm.text-gray-700= comment.text
 
-  = "Status: #{@project.status}"
-
-  - @project.comments.each do |comment|
-    div= comment.text
-    div= comment.created_at
-    div= comment.user.full_name
-
-   = render "comments/form"
-
-= link_to 'Edit', edit_project_path(@project), class: 'hover:underline'
-'&nbsp;|
-= link_to 'Back', projects_path, class: 'hover:underline'
+    .px-6.py-6.bg-gray-50
+      = render "comments/form"
