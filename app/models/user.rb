@@ -18,9 +18,15 @@ class User < ApplicationRecord
   # Validations
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :password, allow_nil: true, length: { minimum: 12 }
+  validates :full_name, presence: true
 
   normalizes :email, with: -> { _1.strip.downcase }
 
+  # Decorator methods
+
+  def initials
+    full_name.split.map { |word| word.first.upcase }.join
+  end
 
   # Callbacks
   before_validation if: :email_changed?, on: :update do

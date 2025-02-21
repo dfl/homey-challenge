@@ -1,12 +1,7 @@
-= form_with(model: project, class: "contents") do |form|
-  - if project.errors.any?
-    #error_explanation.bg-red-50.text-red-500.px-3.py-2.font-medium.rounded-md.mt-3
-      h2
-        = pluralize(project.errors.count, "error")
-        |  prohibited this project from being saved:
-      ul.list-disc.ml-6
-        - project.errors.each do |error|
-          li
-            = error.full_message
-  .inline
-    = form.submit class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer"
+= form_with(model: @project, local: true) do |f|
+  = errors_for(@project)
+  
+  = f.label :name, class: 'block text-gray-700 text-sm font-bold mb-2'
+  = f.text_field :name, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+
+  = f.submit class: 'my-2 bg-blue-500 hover:bg-blue-700 text-white font-bold text-sm py-2 px-4 rounded w-full'

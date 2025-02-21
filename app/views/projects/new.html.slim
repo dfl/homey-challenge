@@ -1,6 +1,7 @@
-- content_for :title, "New project"
-.md:w-2/3.w-full
-  h1.font-bold.text-4xl
-    | New project
-  = render "form", project: @project
-  = link_to "Back to projects", projects_path, class: "ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium"
+.md:mx-auto.w-full.lg:w-1/2.overflow-hidden.mx-0
+  .shadow-md.rounded.px-8.pt-6.pb-8.mb-4.flex.flex-col.justify-center.bg-gray-50
+    h2.text-center.text-xl.text-black.mb-3
+      | New Projects
+
+    = render 'form', project: @project
+    = link_to 'Back', projects_path

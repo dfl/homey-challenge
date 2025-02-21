@@ -4,6 +4,7 @@ FactoryBot.define do
     password { 'SecurePassword123!' }
     verified { false }
     full_name { Faker::Name.name }
+
     trait :verified do
       verified { true }
     end
