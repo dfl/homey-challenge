@@ -12,10 +12,11 @@
         span.inline-flex.items-center.px-2.py-1.rounded-full.text-xs.font-medium class="#{@project.status == 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}"
           = @project.status.titleize
 
-    .divide-y.divide-gray-200#comments
+    .divide-y.divide-gray-200#timeline
       = turbo_stream_from @project, :comments
-      - @project.comments.each do |comment|
-        .p-6[id=dom_id(comment)]
+      = turbo_stream_from @project, :status_changes
+      - (@project.comments + @project.status_changes).sort_by(&:timeline_date).reverse.each do |item|
+        = render "#{item.class.name.underscore.pluralize}/timeline_item", timeline_item: item
           .flex.items-start.space-x-4
             .flex-shrink-0
               - if comment.user.github_username.present?
