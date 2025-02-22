@@ -1,11 +1,18 @@
 source "https://rubygems.org"
 
+ruby file: ".ruby-version"
+
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 8.0.1"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 gem "propshaft"
 # Use sqlite3 as the database for Active Record
-gem "sqlite3", ">= 2.1"
+gem "sqlite3", ">= 2.1", group: %i[ development test ]
+
+# stuff for heroku production
+gem "pg"
+gem "redis"
+
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
@@ -46,6 +53,9 @@ gem "slim-rails" # templating
 gem "authentication-zero"
 gem "html2slim", git: "https://github.com/slim-template/html2slim.git"
 
+gem "faker"
+gem "factory_bot_rails"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
@@ -55,7 +65,6 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
-  gem "factory_bot_rails"
 end
 
 group :development do
@@ -67,7 +76,6 @@ group :test do
   gem "rspec-rails"
   gem "super_diff"
   gem "shoulda-matchers"
-  gem "faker"
 
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"

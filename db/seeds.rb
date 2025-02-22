@@ -9,6 +9,7 @@
 #   end
 
 require 'faker'
+# require 'factory_bot'
 
 password = "1verylongpassword!"
 User.find_or_create_by!(email: "simon@example.com", full_name: "Simon Smith") do |user|

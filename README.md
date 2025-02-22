@@ -15,5 +15,3 @@ bin/dev
 ```
 
 Run the tests with: `rspec`
-
-
