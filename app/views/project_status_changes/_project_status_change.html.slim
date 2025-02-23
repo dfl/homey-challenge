@@ -1,7 +1,0 @@
-= render "shared/timeline_item", user: project_status_change.user, created_at: project_status_change.created_at do
-  | Changed status from 
-  span.inline-flex.items-center.px-2.py-1.rounded-full.text-xs.font-medium class=project_status_color_class[project_status_change.from_status]
-    = project_status_change.from_status.humanize
-  |  to 
-  span.inline-flex.items-center.px-2.py-1.rounded-full.text-xs.font-medium class=project_status_color_class[project_status_change.to_status]
-    = project_status_change.to_status.humanize

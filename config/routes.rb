@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :projects do
-    resources :comments, only: [ :create, :destroy ]
+    resources :comments, only: [ :create, :destroy ], module: :project
   end
 
   ## Authentication routes

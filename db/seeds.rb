@@ -1,14 +1,4 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
-
-require 'faker'
+# require 'faker'
 # require 'factory_bot'
 
 password = "1verylongpassword!"
@@ -22,23 +12,27 @@ User.find_or_create_by!(email: "bob@example.com", full_name: "Bob Mackie") do |u
   user.github_username = "bob"
 end
 
+User.find_or_create_by!(email: "madhura@example.com", full_name: "Madhura Sharma") do |user|
+  user.password = password
+  user.github_username = "mbhave"
+end
+
 User.find_or_create_by!(email: "david@example.com", full_name: "David Lowenfels") do |user|
   user.password = password
   user.github_username = "dfl"
 end
 
-project = Project.find_or_create_by!(name: "Project 1")
 
-statuses = Project.statuses.keys[1..-1]
+project = Project.find_or_create_by!(name: "Project 1")
+desired_statuses = Project.statuses.keys[1..-1]
 
 10.times do |i|
   user = User.find(User.pluck(:id).sample)
-  if rand > 0.5
-    project.comments.find_or_create_by! user:,
-      text: Faker::Lorem.sentence, created_at: i.days.ago
+  if rand > 0.3
+    project.comments.create! user:, body: Faker::Lorem.sentence
   else
-    Current.session = FactoryBot.create(:session, user:)
-    project.update_attribute(:status, statuses.sample)
-    project.status_changes.last.update_attribute(:created_at, i.days.ago)
+    Current.session = Session.create!(user: user) # login user so Current.user is set for status changes
+    project.update_attribute(:status, desired_statuses.sample)
   end
+  project.events.last.update(created_at: i.days.ago)
 end

@@ -1,0 +1,10 @@
+- from_status = status_change.from_status
+- to_status   = status_change.to_status
+
+.mt-2.text-sm.text-gray-700
+  | Changed status from 
+  span.inline-flex.items-center.px-2.py-1.rounded-full.text-xs.font-medium class=project_status_color_class[from_status]
+    = from_status.humanize
+  |  to 
+  span.inline-flex.items-center.px-2.py-1.rounded-full.text-xs.font-medium class=project_status_color_class[to_status]
+    = to_status.humanize

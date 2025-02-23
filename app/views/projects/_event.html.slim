@@ -1,5 +1,7 @@
-- user = local_assigns.fetch(:user)
-.p-6.border-b.border-gray-200.bg-gray-50
+- item = event.eventable
+- user = item.user
+
+div id=dom_id(item) class="p-6 border-b border-gray-200 bg-gray-50"
   .flex.items-start.space-x-4
     .flex-shrink-0
       - if user.github_username.present?
@@ -10,7 +12,6 @@
     .flex-1
       .flex.items-center.space-x-2
         .text-sm.font-medium.text-gray-900= user.full_name
-        .text-xs.text-gray-500 • #{time_ago_in_words(local_assigns.fetch(:created_at))} ago
-      = yield :action if content_for?(:action)
-      .mt-2.text-sm.text-gray-700
-        = yield
+        .text-xs.text-gray-500 • #{time_ago_in_words(event.created_at)} ago
+    = render item
+  

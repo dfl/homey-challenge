@@ -1,4 +1,4 @@
-class CommentsController < ApplicationController
+class Project::CommentsController < ApplicationController
   before_action :set_project
 
   def create
@@ -6,16 +6,16 @@ class CommentsController < ApplicationController
     @comment.user = Current.user
 
     if @comment.save
-      redirect_to @project, notice: 'Comment was successfully added.'
+      redirect_to @project, notice: "Comment was successfully added."
     else
-      redirect_to @project, alert: 'Error adding comment.'
+      redirect_to @project, alert: "Error adding comment."
     end
   end
 
   def destroy
     @comment = @project.comments.find(params[:id])
     @comment.destroy
-    redirect_to @project, notice: 'Comment was successfully removed.'
+    redirect_to @project, notice: "Comment was successfully removed."
   end
 
   private
@@ -25,6 +25,6 @@ class CommentsController < ApplicationController
   end
 
   def comment_params
-    params.require(:comment).permit(:text)
+    params.require(:project_comment).permit(:body)
   end
 end

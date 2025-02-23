@@ -104,9 +104,9 @@ RSpec.describe ProjectsController, type: :request do
         it "creates a status change record" do
           expect {
             action.call
-          }.to change(ProjectStatusChange, :count).by(1)
+          }.to change(Project::StatusChange, :count).by(1)
 
-          status_change = ProjectStatusChange.last
+          status_change = Project::StatusChange.last
           expect(status_change.from_status).to eq("pending")
           expect(status_change.to_status).to eq("active")
           expect(status_change.user).to eq(user)
@@ -136,9 +136,9 @@ RSpec.describe ProjectsController, type: :request do
       end
 
       it "destroys associated status changes" do
-        create(:project_status_change, project: project)
+        create(:status_change, project: project)
 
-        expect { action.call }.to change(ProjectStatusChange, :count).by(-1)
+        expect { action.call }.to change(Project::StatusChange, :count).by(-1)
       end
     end
   end

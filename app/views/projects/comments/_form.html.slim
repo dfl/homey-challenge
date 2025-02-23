@@ -1,0 +1,9 @@
+.py-6.px-6.bg-gray-50= form_with(model: [@project, Project::Comment.new], url: project_comments_path(@project)) do |f|
+
+    .space-y-4
+      .flex.flex-col
+        = f.label :body, "Add a comment", class: "text-sm font-medium text-gray-800 mb-2"
+        = f.text_area :body, rows: 3, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+      
+      .flex.justify-end
+        = f.submit "Post comment", class: "inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"

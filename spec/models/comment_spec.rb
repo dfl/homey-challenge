@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Comment, type: :model do
+RSpec.describe Project::Comment, type: :model do
   let(:comment) { build(:comment) }
 
   describe "associations" do
@@ -9,12 +9,12 @@ RSpec.describe Comment, type: :model do
   end
 
   describe "validations" do
-    it { should validate_presence_of(:text) }
+    it { should validate_presence_of(:body) }
   end
 
-  describe "timeline_item concern" do
-    it "implements timeline_date" do
-      expect(comment.timeline_date).to eq(comment.created_at)
+  describe "callbacks" do
+    it "creates a timeline item after creation" do
+      expect { comment.save }.to change(Project::Event, :count).by(1)
     end
   end
 end

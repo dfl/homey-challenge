@@ -1,10 +1,21 @@
+# == Schema Information
+#
+# Table name: projects
+#
+#  id         :integer          not null, primary key
+#  name       :string
+#  status     :integer
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
 class Project < ApplicationRecord
   enum :status, { pending: 0, active: 1, complete: 2, archived: 3 }
 
   # Associations
-  has_many :comments, dependent: :destroy
-  has_many :status_changes, class_name: "ProjectStatusChange", dependent: :destroy
-  has_many :users, through: :comments
+  has_many :comments, class_name: "Project::Comment", dependent: :destroy
+  has_many :status_changes, class_name: "Project::StatusChange", dependent: :destroy
+  has_many :events, class_name: "Project::Event", dependent: :destroy
+  has_many :users, through: :events, source: :eventable, source_type: "User"
 
   # Validations
   validates :name, presence: true, uniqueness: true
@@ -12,12 +23,7 @@ class Project < ApplicationRecord
 
   # Callbacks
   before_validation :set_default_status, on: :create
-  before_save :track_status_change, if: :status_changed?
-
-  # Decorators
-  def timeline_items
-    (comments + status_changes).sort_by(&:created_at)
-  end
+  after_save :create_status_change!, if: :saved_change_to_status?
 
   private
 
@@ -25,13 +31,11 @@ class Project < ApplicationRecord
     self.status ||= :pending
   end
 
-  def track_status_change
-    return unless Current.user # Skip if no user context (like in tests/console)
+  def create_status_change!
+    return unless user = Current.user # Skip if no user context (i.e. tests or console)
+    from_status = saved_change_to_status[0] || "pending"
+    to_status   = saved_change_to_status[1]
 
-    status_changes.build(
-      user: Current.user,
-      from_status: status_was.presence || "pending",
-      to_status: status
-    )
+    status_changes.create!(user:, from_status:, to_status:)
   end
 end
