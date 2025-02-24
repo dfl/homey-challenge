@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_23_000000) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_24_000000) do
   create_table "project_comments", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "project_id", null: false
@@ -28,6 +28,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_23_000000) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["eventable_type", "eventable_id"], name: "index_project_events_on_eventable"
+    t.index ["project_id", "created_at"], name: "index_project_events_on_project_id_and_created_at"
     t.index ["project_id"], name: "index_project_events_on_project_id"
   end
 

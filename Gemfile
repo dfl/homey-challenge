@@ -72,6 +72,7 @@ group :development do
   gem "web-console"
   gem "byebug"
   gem "annotaterb"
+  gem "rack-mini-profiler"
 end
 
 group :test do

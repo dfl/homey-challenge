@@ -53,7 +53,14 @@ class ProjectsController < ApplicationController
   private
 
   def set_project
-    @project = Project.find(params.expect(:id))
+    @project = Project.includes(
+      events: [
+        :eventable,
+        { eventable: :user }  # Preload users through eventable polymorphic association
+      ],
+      comments: :user,
+      status_changes: :user
+    ).find(params[:id])
   end
 
   def project_params

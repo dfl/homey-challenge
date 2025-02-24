@@ -1,17 +1,14 @@
-- item = event.eventable
-- user = item.user
-
-div id=dom_id(item) class="p-6 border-b border-gray-200 bg-gray-50"
+div id=dom_id(event.eventable) class="p-6 border-b border-gray-200 bg-gray-50"
+  - user = event.associated_user
   .flex.items-start.space-x-4
     .flex-shrink-0
-      - if user.github_username.present?
+      - if user&.github_username.present?
         = image_tag github_avatar_url(user.github_username, size: 40), class: "h-10 w-10 rounded-full", alt: user.full_name
       - else
         .h-10.w-10.rounded-full.bg-gray-200.flex.items-center.justify-center
-          span.text-gray-500.text-sm= user.initials
+          span.text-gray-500.text-sm= user&.initials
     .flex-1
       .flex.items-center.space-x-2
-        .text-sm.font-medium.text-gray-900= user.full_name
+        .text-sm.font-medium.text-gray-900= user&.full_name
         .text-xs.text-gray-500 • #{time_ago_in_words(event.created_at)} ago
-    = render item
-  
+    = render event.eventable

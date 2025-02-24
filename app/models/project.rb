@@ -14,7 +14,7 @@ class Project < ApplicationRecord
   # Associations
   has_many :comments, class_name: "Project::Comment", dependent: :destroy
   has_many :status_changes, class_name: "Project::StatusChange", dependent: :destroy
-  has_many :events, class_name: "Project::Event", dependent: :destroy
+  has_many :events, -> { order(created_at: :asc) }, class_name: "Project::Event", dependent: :destroy
   has_many :users, through: :events, source: :eventable, source_type: "User"
 
   # Validations
